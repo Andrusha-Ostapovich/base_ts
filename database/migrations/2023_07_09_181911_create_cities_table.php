@@ -11,12 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('operators', function (Blueprint $table) {
-            $table->bigIncrements('id');
+        Schema::create('cities', function (Blueprint $table) {
+            $table->bigIncrements('id'); 
+            $table->string('city');
+            $table->unsignedBigInteger('operator_id');
+            $table->foreign('operator_id')->references('id')->on('operators');
             $table->unsignedBigInteger('number_id');
             $table->foreign('number_id')->references('id')->on('phone_numbers');
-            $table->string('name');
-            $table->string('сommunication_type');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }
@@ -26,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('operators');
+        Schema::dropIfExists('cities');
     }
 };
